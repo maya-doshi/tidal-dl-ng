@@ -562,12 +562,20 @@ class Download:
         Returns:
             tuple[bool, pathlib.Path | str]: (Downloaded, path to file)
         """
+        # Check for stop signal before doing anything
+        if self.event_abort.is_set() or (event_stop and event_stop.is_set()):
+            return False, ""
+
         # Step 1: Validate and prepare media
         validated_media = self._validate_and_prepare_media(media, media_id, media_type, video_download)
         if validated_media is None or not isinstance(validated_media, Track | Video):
             return False, ""
 
         media = validated_media
+
+        # Check for stop signal
+        if self.event_abort.is_set() or (event_stop and event_stop.is_set()):
+            return False, ""
 
         # Step 2: Create file paths and determine skip logic
         path_media_dst, file_extension_dummy, skip_file, skip_download = self._prepare_file_paths_and_skip_logic(
@@ -1079,11 +1087,7 @@ class Download:
             self.adjust_quality_video(quality_video_old)
 
         # Apply download delay if needed
-        if (
-            (download_delay and not skip_file)
-            and not self.event_abort.is_set()
-            and not (event_stop and event_stop.is_set())
-        ):
+        if download_delay and not skip_file:
             time_sleep: float = round(
                 random.SystemRandom().uniform(
                     self.settings.data.download_delay_sec_min, self.settings.data.download_delay_sec_max
@@ -1092,7 +1096,14 @@ class Download:
             )
 
             self.fn_logger.debug(f"Next download will start in {time_sleep} seconds.")
-            time.sleep(time_sleep)
+
+            # Use event_stop or event_abort for interruptible sleep
+            if event_stop:
+                event_stop.wait(time_sleep)
+            elif self.event_abort:
+                self.event_abort.wait(time_sleep)
+            else:
+                time.sleep(time_sleep)
 
     def media_move_and_symlink(
         self, media: Track | Video, path_media_src: pathlib.Path, file_extension: str
