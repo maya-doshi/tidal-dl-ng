@@ -630,15 +630,40 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if not index.isValid():
             return
 
-        # Get the media item at this point
-        media = get_results_media_item(index, self.proxy_tr_results, self.model_tr_results)
+        # Determine selection scope
+        selected_rows = self.tr_results.selectionModel().selectedRows()
+
+        # If clicked item is in selection, process all selected items. Otherwise just the clicked one.
+        items_to_process = []
+        clicked_in_selection = False
+        for selected_index in selected_rows:
+            if selected_index.row() == index.row() and selected_index.parent() == index.parent():
+                clicked_in_selection = True
+                break
+
+        if clicked_in_selection:
+            # Sort by row to maintain order? Optional but nice.
+            # Using selectedRows directly.
+            for sel_idx in selected_rows:
+                m = get_results_media_item(sel_idx, self.proxy_tr_results, self.model_tr_results)
+                items_to_process.append(m)
+        else:
+            # Just the clicked item
+            m = get_results_media_item(index, self.proxy_tr_results, self.model_tr_results)
+            items_to_process.append(m)
+
+        # Check if we have any tracks/videos with albums in the selection
+        album_downloadable_items = [
+            m for m in items_to_process if isinstance(m, Track | Video) and hasattr(m, "album") and m.album
+        ]
 
         # We build the menu.
         menu = QtWidgets.QMenu()
 
-        # Add "Download Full Album" option if it's a track or video with an album
-        if isinstance(media, Track | Video) and hasattr(media, "album") and media.album:
-            menu.addAction("Download Full Album(s)", lambda: self.thread_download_album_from_track(point))
+        # Add "Download Full Album(s)" option if valid items exist
+        if album_downloadable_items:
+            label = "Download Full Albums" if len(album_downloadable_items) > 1 else "Download Full Album"
+            menu.addAction(label, lambda: self.thread_download_albums_from_tracks(album_downloadable_items))
 
         menu.addAction("Copy Share URL", lambda: self.on_copy_url_share(self.tr_results, point))
 
@@ -2491,43 +2516,39 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         event.accept()
 
-    def thread_download_album_from_track(self, point: QtCore.QPoint) -> None:
-        """Starts the download of the full album from a selected track in a new thread.
+    def thread_download_albums_from_tracks(self, media_list: list[Track | Video]) -> None:
+        """Starts the download of full albums from selected tracks in a new thread.
 
         Args:
-            point (QPoint): The point in the tree where the user clicked.
+            media_list (list[Track | Video]): List of selected tracks/videos.
         """
-        self.thread_it(self.on_download_album_from_track, point)
+        self.thread_it(self.on_download_albums_from_tracks, media_list)
 
-    def on_download_album_from_track(self, point: QtCore.QPoint) -> None:
-        """Adds the album associated with a selected track to the download queue.
-
-        This method retrieves the album from a track selected in the results tree and attempts to add it to the download queue. If the album cannot be retrieved or an error occurs, a warning or error is logged.
+    def on_download_albums_from_tracks(self, media_list: list[Track | Video]) -> None:
+        """Adds the albums associated with selected tracks to the download queue.
 
         Args:
-            point (QtCore.QPoint): The point in the results tree where the user clicked.
+            media_list (list[Track | Video]): List of selected tracks/videos.
         """
-        index: QtCore.QModelIndex = self.tr_results.indexAt(point)
-        media_track: Track = get_results_media_item(index, self.proxy_tr_results, self.model_tr_results)
+        for media_track in media_list:
+            # Ensure we have a track and an album object with an ID
+            if isinstance(media_track, Track | Video) and media_track.album and media_track.album.id:
+                try:
+                    # Use the album ID from the track to fetch the FULL album object from TIDAL
+                    full_album_object = self.tidal.session.album(media_track.album.id)
 
-        # Ensure we have a track and an album object with an ID
-        if isinstance(media_track, Track) and media_track.album and media_track.album.id:
-            try:
-                # Use the album ID from the track to fetch the FULL album object from TIDAL
-                full_album_object = self.tidal.session.album(media_track.album.id)
+                    # Convert the full album object into a queue item
+                    queue_dl_item: QueueDownloadItem | None = self.media_to_queue_download_model(full_album_object)
 
-                # Convert the full album object into a queue item
-                queue_dl_item: QueueDownloadItem | None = self.media_to_queue_download_model(full_album_object)
-
-                if queue_dl_item:
-                    # Add the item to the download queue
-                    self.queue_download_media(queue_dl_item)
-                else:
-                    logger_gui.warning(f"Failed to create a queue item for album ID: {full_album_object.id}")
-            except Exception as e:
-                logger_gui.error(f"Could not fetch the full album from TIDAL. Error: {e}")
-        else:
-            logger_gui.warning("Could not retrieve album information from the selected track.")
+                    if queue_dl_item:
+                        # Add the item to the download queue
+                        self.queue_download_media(queue_dl_item)
+                    else:
+                        logger_gui.warning(f"Failed to create a queue item for album ID: {full_album_object.id}")
+                except Exception as e:
+                    logger_gui.error(f"Could not fetch the full album from TIDAL. Error: {e}")
+            else:
+                logger_gui.warning("Could not retrieve album information from a selected track.")
 
 
 # TODO: Comment with Google Docstrings.
