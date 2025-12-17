@@ -412,6 +412,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         tree.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         tree.customContextMenuRequested.connect(self.menu_context_queue_download)
 
+        # Enable Drag and Drop for reordering
+        tree.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
+        tree.setDragDropMode(QtWidgets.QAbstractItemView.InternalMove)
+        tree.setDefaultDropAction(QtCore.Qt.MoveAction)
+
     def tidal_user_lists(self) -> None:
         """Fetch and emit user playlists, mixes, and favorites from Tidal."""
         # Start loading spinner
@@ -2217,6 +2222,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         child.setText(4, queue_dl_item.quality_audio)
         child.setText(5, queue_dl_item.quality_video)
         self.tr_queue_download.addTopLevelItem(child)
+
+        # Enable dragging but disable dropping ON the item (forces insertion between items)
+        child.setFlags(QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsDragEnabled)
 
     def watcher_queue_download(self) -> None:
         """Monitor the download queue and process items as they become available."""
