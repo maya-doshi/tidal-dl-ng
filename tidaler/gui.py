@@ -1,13 +1,13 @@
 # Compilation mode, support OS-specific options
 # nuitka-project-if: {OS} in ("Darwin"):
 #    nuitka-project: --macos-create-app-bundle
-#    nuitka-project: --macos-app-icon=tidal_dl_ng/ui/icon.icns
+#    nuitka-project: --macos-app-icon=tidaler/ui/icon.icns
 #    nuitka-project: --macos-signed-app-name=com.exislow.TidalDlNg
 #    nuitka-project: --macos-app-mode=gui
 # nuitka-project-if: {OS} in ("Linux", "FreeBSD"):
-#    nuitka-project: --linux-icon=tidal_dl_ng/ui/icon512.png
+#    nuitka-project: --linux-icon=tidaler/ui/icon512.png
 # nuitka-project-if: {OS} in ("Windows"):
-#    nuitka-project: --windows-icon-from-ico=tidal_dl_ng/ui/icon.ico
+#    nuitka-project: --windows-icon-from-ico=tidaler/ui/icon.ico
 #    nuitka-project: --file-description="TIDAL media downloader next generation."
 
 # Debugging options, controlled via environment variable at compile time.
@@ -36,8 +36,8 @@
 # nuitka-project: --noinclude-dlls=libQt6Sensors*
 # nuitka-project: --noinclude-dlls=libQt6Test*
 # nuitka-project: --noinclude-dlls=libQt6WebEngine*
-# nuitka-project: --include-data-files={MAIN_DIRECTORY}/ui/icon*=tidal_dl_ng/ui/
-# nuitka-project: --include-data-files={MAIN_DIRECTORY}/ui/default_album_image.png=tidal_dl_ng/ui/default_album_image.png
+# nuitka-project: --include-data-files={MAIN_DIRECTORY}/ui/icon*=tidaler/ui/
+# nuitka-project: --include-data-files={MAIN_DIRECTORY}/ui/default_album_image.png=tidaler/ui/default_album_image.png
 # nuitka-project: --include-data-files=./pyproject.toml=pyproject.toml
 # nuitka-project: --force-stderr-spec="{TEMP}/tidal-dl-ng.err.log"
 # nuitka-project: --force-stdout-spec="{TEMP}/tidal-dl-ng.out.log"
@@ -54,9 +54,9 @@ from typing import Any
 from requests.exceptions import HTTPError
 from tidalapi.session import LinkLogin
 
-from tidal_dl_ng import __version__, update_available
-from tidal_dl_ng.dialog import DialogLogin, DialogPreferences, DialogVersion
-from tidal_dl_ng.helper.gui import (
+from tidaler import __version__, update_available
+from tidaler.dialog import DialogLogin, DialogPreferences, DialogVersion
+from tidaler.helper.gui import (
     FilterHeader,
     HumanProxyModel,
     get_queue_download_media,
@@ -67,8 +67,8 @@ from tidal_dl_ng.helper.gui import (
     set_queue_download_media,
     set_user_list_media,
 )
-from tidal_dl_ng.helper.path import get_format_template, resource_path
-from tidal_dl_ng.helper.tidal import (
+from tidaler.helper.path import get_format_template, resource_path
+from tidaler.helper.tidal import (
     favorite_function_factory,
     get_tidal_media_id,
     get_tidal_media_type,
@@ -99,15 +99,15 @@ from tidalapi.media import AudioMode
 from tidalapi.playlist import Folder
 from tidalapi.session import SearchTypes
 
-from tidal_dl_ng.config import HandlingApp, Settings, Tidal
-from tidal_dl_ng.constants import FAVORITES, QualityVideo, QueueDownloadStatus, TidalLists
-from tidal_dl_ng.download import Download
-from tidal_dl_ng.logger import XStream, logger_gui
-from tidal_dl_ng.model.gui_data import ProgressBars, QueueDownloadItem, ResultItem, StatusbarMessage
-from tidal_dl_ng.model.meta import ReleaseLatest
-from tidal_dl_ng.ui.main import Ui_MainWindow
-from tidal_dl_ng.ui.spinner import QtWaitingSpinner
-from tidal_dl_ng.worker import Worker
+from tidaler.config import HandlingApp, Settings, Tidal
+from tidaler.constants import FAVORITES, QualityVideo, QueueDownloadStatus, TidalLists
+from tidaler.download import Download
+from tidaler.logger import XStream, logger_gui
+from tidaler.model.gui_data import ProgressBars, QueueDownloadItem, ResultItem, StatusbarMessage
+from tidaler.model.meta import ReleaseLatest
+from tidaler.ui.main import Ui_MainWindow
+from tidaler.ui.spinner import QtWaitingSpinner
+from tidaler.worker import Worker
 
 
 # TODO: Make more use of Exceptions
@@ -284,7 +284,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def _init_info(self):
         """Set default album cover image in the GUI."""
-        path_image: str = resource_path("tidal_dl_ng/ui/default_album_image.png")
+        path_image: str = resource_path("tidaler/ui/default_album_image.png")
 
         self.l_pm_cover.setPixmap(QtGui.QPixmap(path_image))
 
@@ -2058,7 +2058,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 pixmap.loadFromData(data_cover)
                 self.l_pm_cover.setPixmap(pixmap)
             elif not cover_url:
-                path_image: str = resource_path("tidal_dl_ng/ui/default_album_image.png")
+                path_image: str = resource_path("tidaler/ui/default_album_image.png")
                 self.l_pm_cover.setPixmap(QtGui.QPixmap(path_image))
         finally:
             self.s_spinner_stop.emit()
@@ -2595,12 +2595,12 @@ def gui_activate(tidal: Tidal | None = None):
     # Create icon object and apply it to app window.
     icon: QtGui.QIcon = QtGui.QIcon()
 
-    icon.addFile("tidal_dl_ng/ui/icon16.png", QtCore.QSize(16, 16))
-    icon.addFile("tidal_dl_ng/ui/icon32.png", QtCore.QSize(32, 32))
-    icon.addFile("tidal_dl_ng/ui/icon48.png", QtCore.QSize(48, 48))
-    icon.addFile("tidal_dl_ng/ui/icon64.png", QtCore.QSize(64, 64))
-    icon.addFile("tidal_dl_ng/ui/icon256.png", QtCore.QSize(256, 256))
-    icon.addFile("tidal_dl_ng/ui/icon512.png", QtCore.QSize(512, 512))
+    icon.addFile("tidaler/ui/icon16.png", QtCore.QSize(16, 16))
+    icon.addFile("tidaler/ui/icon32.png", QtCore.QSize(32, 32))
+    icon.addFile("tidaler/ui/icon48.png", QtCore.QSize(48, 48))
+    icon.addFile("tidaler/ui/icon64.png", QtCore.QSize(64, 64))
+    icon.addFile("tidaler/ui/icon256.png", QtCore.QSize(256, 256))
+    icon.addFile("tidaler/ui/icon512.png", QtCore.QSize(512, 512))
     app.setWindowIcon(icon)
 
     # This bit gets the taskbar icon working properly in Windows

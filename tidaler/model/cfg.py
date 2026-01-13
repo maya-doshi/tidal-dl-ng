@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from tidalapi import Quality
 
-from tidal_dl_ng.constants import CoverDimensions, InitialKey, MetadataTargetUPC, QualityVideo
+from tidaler.constants import CoverDimensions, InitialKey, MetadataTargetUPC, QualityVideo
 
 
 @dataclass_json

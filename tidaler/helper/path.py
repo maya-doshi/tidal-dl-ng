@@ -12,15 +12,15 @@ from pathvalidate.error import ValidationError
 from tidalapi import Album, Mix, Playlist, Track, UserPlaylist, Video
 from tidalapi.media import AudioExtensions
 
-from tidal_dl_ng import __name_display__
-from tidal_dl_ng.constants import (
+from tidaler import __name_display__
+from tidaler.constants import (
     FILENAME_LENGTH_MAX,
     FILENAME_SANITIZE_PLACEHOLDER,
     FORMAT_TEMPLATE_EXPLICIT,
     UNIQUIFY_THRESHOLD,
     MediaType,
 )
-from tidal_dl_ng.helper.tidal import name_builder_album_artist, name_builder_artist, name_builder_title
+from tidaler.helper.tidal import name_builder_album_artist, name_builder_artist, name_builder_title
 
 
 def path_home() -> str:

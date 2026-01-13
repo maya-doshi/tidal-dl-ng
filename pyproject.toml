@@ -1,8 +1,8 @@
 [project]
-name = "tidal-dl-ng"
-authors = [{ name = "Robert Honz", email = "<cen.sored@gmail.com>" }]
-version = "0.33.0"
-description = "TIDAL Media Downloader Next Generation!"
+name = "tidaler"
+authors = [{ name = "Maya Doshi", email = "<maya-doshi@proton.me>" }]
+version = "0.1.0"
+description = "TIDAL Downloader (fork of tidal-dl-ng)"
 readme = "README.md"
 license = "AGPL-3.0-only"
 license-files = ["LICENSE"]
@@ -17,17 +17,17 @@ requires-python = ">=3.12,<3.14"
 dynamic = ["dependencies"]
 
 [project.urls]
-repository = "https://github.com/exislow/tidal-dl-ng"
+repository = "https://github.com/maya-doshi/tidal-dl-ng"
 documentation = "https://exislow.github.io/tidal-dl-ng/"
 
 [project.scripts]
-tidal-dl-ng = "tidal_dl_ng.cli:app"
-tidal-dl-ng-gui = "tidal_dl_ng.gui:gui_activate"
-tdn = "tidal_dl_ng.cli:app"
-tdng = "tidal_dl_ng.gui:gui_activate"
+tidaler = "tidaler.cli:app"
+tidaler-gui = "tidaler.gui:gui_activate"
+tdn = "tidaler.cli:app"
+tdng = "tidaler.gui:gui_activate"
 
 [tool.poetry]
-packages = [{ include = "tidal_dl_ng" }]
+packages = [{ include = "tidaler" }]
 
 [tool.poetry.dependencies]
 requests = "~2.32.5"
@@ -138,7 +138,7 @@ ignore = [
 
 [tool.ruff.per-file-ignores]
 "tests/*" = ["S101"]
-"tidal_dl_ng/cli.py" = ["UP007"]
+"tidaler/cli.py" = ["UP007"]
 
 [tool.black]
 # https://github.com/psf/black
@@ -161,8 +161,8 @@ exclude = '''
     | venv
     | site
     | docs
-    | tidal_dl_ng/ui/main.py
-    | tidal_dl_ng/ui/dialog_version.py
+    | tidaler/ui/main.py
+    | tidaler/ui/dialog_version.py
 )/
 '''
 
@@ -208,7 +208,7 @@ known_third_party = [
 
 [tool.pyright]
 # https://microsoft.github.io/pyright/#/configuration
-include = ["tidal_dl_ng"]
+include = ["tidaler"]
 pythonVersion = "3.12"
 typeCheckingMode = "standard"
 reportMissingImports = true

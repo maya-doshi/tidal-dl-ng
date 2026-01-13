@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from tidalapi.media import Quality
 
-from tidal_dl_ng.constants import QualityVideo
+from tidaler.constants import QualityVideo
 
 try:
     from PySide6 import QtCore

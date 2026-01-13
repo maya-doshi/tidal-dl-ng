@@ -19,21 +19,21 @@ from rich.progress import (
 )
 from rich.table import Table
 
-from tidal_dl_ng import __version__
-from tidal_dl_ng.config import HandlingApp, Settings, Tidal
-from tidal_dl_ng.constants import CTX_TIDAL, FAVORITES, MediaType
-from tidal_dl_ng.download import Download
-from tidal_dl_ng.helper.cli import parse_timestamp
-from tidal_dl_ng.helper.path import get_format_template, path_file_settings
-from tidal_dl_ng.helper.tidal import (
+from tidaler import __version__
+from tidaler.config import HandlingApp, Settings, Tidal
+from tidaler.constants import CTX_TIDAL, FAVORITES, MediaType
+from tidaler.download import Download
+from tidaler.helper.cli import parse_timestamp
+from tidaler.helper.path import get_format_template, path_file_settings
+from tidaler.helper.tidal import (
     all_artist_album_ids,
     get_tidal_media_id,
     get_tidal_media_type,
     instantiate_media,
     url_ending_clean,
 )
-from tidal_dl_ng.helper.wrapper import LoggerWrapped
-from tidal_dl_ng.model.cfg import HelpSettings
+from tidaler.helper.wrapper import LoggerWrapped
+from tidaler.model.cfg import HelpSettings
 
 app = typer.Typer(context_settings={"help_option_names": ["-h", "--help"]}, add_completion=False)
 app_dl_fav = typer.Typer(
@@ -591,7 +591,7 @@ def gui(ctx: typer.Context):
     Args:
         ctx (typer.Context): Typer context object.
     """
-    from tidal_dl_ng.gui import gui_activate
+    from tidaler.gui import gui_activate
 
     ctx.invoke(login, ctx)
     gui_activate(ctx.obj[CTX_TIDAL])

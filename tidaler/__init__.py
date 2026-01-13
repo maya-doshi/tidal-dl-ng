@@ -6,8 +6,8 @@ from urllib.parse import urlparse
 import requests
 import toml
 
-from tidal_dl_ng.constants import REQUESTS_TIMEOUT_SEC
-from tidal_dl_ng.model.meta import ProjectInformation, ReleaseLatest
+from tidaler.constants import REQUESTS_TIMEOUT_SEC
+from tidaler.model.meta import ProjectInformation, ReleaseLatest
 
 
 def metadata_project() -> ProjectInformation:

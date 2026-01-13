@@ -38,8 +38,8 @@ from tidalapi.media import (
     VideoExtensions,
 )
 
-from tidal_dl_ng.config import Settings, Tidal
-from tidal_dl_ng.constants import (
+from tidaler.config import Settings, Tidal
+from tidaler.constants import (
     CHUNK_SIZE,
     COVER_NAME,
     EXTENSION_LYRICS,
@@ -54,16 +54,16 @@ from tidal_dl_ng.constants import (
     MetadataTargetUPC,
     QualityVideo,
 )
-from tidal_dl_ng.helper.camelot import format_initial_key
-from tidal_dl_ng.helper.decryption import decrypt_file, decrypt_security_token
-from tidal_dl_ng.helper.exceptions import MediaMissing
-from tidal_dl_ng.helper.path import (
+from tidaler.helper.camelot import format_initial_key
+from tidaler.helper.decryption import decrypt_file, decrypt_security_token
+from tidaler.helper.exceptions import MediaMissing
+from tidaler.helper.path import (
     check_file_exists,
     format_path_media,
     path_file_sanitize,
     url_to_filename,
 )
-from tidal_dl_ng.helper.tidal import (
+from tidaler.helper.tidal import (
     instantiate_media,
     items_results_all,
     get_album_artists,
@@ -72,9 +72,9 @@ from tidal_dl_ng.helper.tidal import (
     name_builder_item,
     name_builder_title,
 )
-from tidal_dl_ng.metadata import Metadata
-from tidal_dl_ng.model.downloader import DownloadSegmentResult, TrackStreamInfo
-from tidal_dl_ng.model.gui_data import ProgressBars
+from tidaler.metadata import Metadata
+from tidaler.model.downloader import DownloadSegmentResult, TrackStreamInfo
+from tidaler.model.gui_data import ProgressBars
 
 
 # TODO: Set appropriate client string and use it for video download.

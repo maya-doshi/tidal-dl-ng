@@ -9,15 +9,15 @@ from pathlib import Path
 from PySide6 import QtCore, QtGui, QtWidgets
 from tidalapi import Quality as QualityAudio
 
-from tidal_dl_ng import __version__
-from tidal_dl_ng.config import Settings
-from tidal_dl_ng.constants import CoverDimensions, QualityVideo
-from tidal_dl_ng.model.cfg import HelpSettings
-from tidal_dl_ng.model.cfg import Settings as ModelSettings
-from tidal_dl_ng.model.meta import ReleaseLatest
-from tidal_dl_ng.ui.dialog_login import Ui_DialogLogin
-from tidal_dl_ng.ui.dialog_settings import Ui_DialogSettings
-from tidal_dl_ng.ui.dialog_version import Ui_DialogVersion
+from tidaler import __version__
+from tidaler.config import Settings
+from tidaler.constants import CoverDimensions, QualityVideo
+from tidaler.model.cfg import HelpSettings
+from tidaler.model.cfg import Settings as ModelSettings
+from tidaler.model.meta import ReleaseLatest
+from tidaler.ui.dialog_login import Ui_DialogLogin
+from tidaler.ui.dialog_settings import Ui_DialogSettings
+from tidaler.ui.dialog_version import Ui_DialogVersion
 
 
 class DialogVersion(QtWidgets.QDialog):
