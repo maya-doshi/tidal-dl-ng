@@ -24,6 +24,17 @@ def name_builder_artist(media: Track | Video | Album, delimiter: str = ", ") -> 
     """
     return delimiter.join(artist.name for artist in media.artists)
 
+def get_album_artists(media: Track | Album) -> [str]:
+    artists_tmp: [str] = []
+    artists: [Artist] = media.album.artists if isinstance(media, Track) else media.artists
+
+    for artist in artists:
+        if Role.main in artist.roles:
+            artists_tmp.append(artist.name)
+
+    print(artists_tmp)
+
+    return artists_tmp
 
 def name_builder_album_artist(media: Track | Album, first_only: bool = False, delimiter: str = ", ") -> str:
     """Builds a string of main album artist names for a track or album.
@@ -38,17 +49,12 @@ def name_builder_album_artist(media: Track | Album, first_only: bool = False, de
     Returns:
         str: A delimited string of main album artist names.
     """
-    artists_tmp: [str] = []
-    artists: [Artist] = media.album.artists if isinstance(media, Track) else media.artists
+    album_artists = get_album_artists(media)
 
-    for artist in artists:
-        if Role.main in artist.roles:
-            artists_tmp.append(artist.name)
+    if first_only:
+        return album_artists[0]
 
-            if first_only:
-                break
-
-    return delimiter.join(artists_tmp)
+    return delimiter.join(album_artists)
 
 
 def name_builder_title(media: Track | Video | Mix | Playlist | Album | Video) -> str:

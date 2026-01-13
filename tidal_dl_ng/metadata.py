@@ -9,8 +9,8 @@ class Metadata:
     path_file: str | pathlib.Path
     title: str
     album: str
-    albumartist: str
-    artists: str
+    albumartist: [str]
+    artists: [str]
     copy_right: str
     tracknumber: int
     discnumber: int
@@ -42,7 +42,7 @@ class Metadata:
         target_upc: dict[str, str],
         album: str = "",
         title: str = "",
-        artists: str = "",
+        artists: [str] = [],
         copy_right: str = "",
         tracknumber: int = 0,
         discnumber: int = 0,
@@ -50,7 +50,7 @@ class Metadata:
         totaldisc: int = 0,
         composer: str = "",
         isrc: str = "",
-        albumartist: str = "",
+        albumartist: [str] = [],
         date: str = "",
         lyrics: str = "",
         lyrics_unsynced: str = "",
