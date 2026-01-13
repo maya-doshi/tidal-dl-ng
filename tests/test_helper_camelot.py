@@ -1,6 +1,6 @@
 """Tests for Camelot wheel notation conversions."""
 
-from tidal_dl_ng.helper.camelot import (
+from tidaler.helper.camelot import (
     CamelotNotation,
     KeyScale,
     alphanumeric_to_classic,

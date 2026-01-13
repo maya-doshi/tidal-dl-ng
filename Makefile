@@ -1,7 +1,7 @@
 APP_NAME = "TIDAL-Downloader-NG"
 APP_VERSION=`grep -m 1 'version =' pyproject.toml | tr -s ' ' | tr -d '"' | tr -d "'" | cut -d' ' -f3`
 app_path_dist = "dist"
-path_asset = "tidal_dl_ng/ui"
+path_asset = "tidaler/ui"
 APP_BUNDLE_NAME="gui"
 DMG_NAME="dmg"
 
@@ -69,7 +69,7 @@ gui: ## Build GUI app
 		--macos-app-name=$(APP_NAME) \
 		--output-filename=$(APP_NAME) \
 		--product-name=$(APP_NAME) \
-		tidal_dl_ng/gui.py
+		tidaler/gui.py
 
 .PHONY: gui-windows
 gui-windows: gui ## Build GUI app

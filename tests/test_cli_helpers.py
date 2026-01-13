@@ -5,7 +5,7 @@ from datetime import UTC, datetime
 import pytest
 import typer
 
-from tidal_dl_ng.helper.cli import parse_timestamp
+from tidaler.helper.cli import parse_timestamp
 
 
 class TestParseTimestamp:

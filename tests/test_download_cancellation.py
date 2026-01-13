@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from rich.progress import Progress, TaskID
 
-from tidal_dl_ng.download import Download
+from tidaler.download import Download
 
 
 class TestDownloadCancellation:
