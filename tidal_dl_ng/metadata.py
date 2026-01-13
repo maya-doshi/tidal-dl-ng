@@ -35,6 +35,7 @@ class Metadata:
     bpm: int
     initial_key: str
     m: mutagen.mp4.MP4 | mutagen.mp4.MP4 | mutagen.flac.FLAC
+    release_type: str
 
     def __init__(
         self,
@@ -65,6 +66,7 @@ class Metadata:
         explicit: bool = False,
         bpm: int = 0,
         initial_key: str = "",
+        release_type: str = "",
     ):
         self.path_file = path_file
         self.title = title
@@ -94,6 +96,7 @@ class Metadata:
         self.bpm = bpm
         self.initial_key = initial_key
         self.m: mutagen.FileType = mutagen.File(self.path_file)
+        self.release_type = release_type
 
     def _cover(self) -> bool:
         result: bool = False
@@ -153,6 +156,7 @@ class Metadata:
         self.m.tags[self.target_upc["FLAC"]] = self.upc
         self.m.tags["BPM"] = str(self.bpm if self.bpm > 0 else "")
         self.m.tags["INITIALKEY"] = self.initial_key
+        self.m.tags["RELEASETYPE"] = self.release_type
 
         if self.replay_gain_write:
             self.m.tags["REPLAYGAIN_ALBUM_GAIN"] = str(self.album_replay_gain)
@@ -178,6 +182,7 @@ class Metadata:
         self.m.tags.add(TXXX(encoding=3, desc=self.target_upc["MP3"], text=self.upc))
         self.m.tags.add(TBPM(encoding=3, text=str(self.bpm if self.bpm > 0 else "")))
         self.m.tags.add(TKEY(encoding=3, text=self.initial_key))
+        self.m.tags.add(TXXX(encoding=3, desc="MusicBrainz Album Type", text=self.release_type))
 
         if self.replay_gain_write:
             self.m.tags.add(TXXX(encoding=3, desc="REPLAYGAIN_ALBUM_GAIN", text=str(self.album_replay_gain)))
@@ -205,6 +210,8 @@ class Metadata:
         if self.bpm > 0:
             self.m.tags["tmpo"] = [self.bpm]
         self.m.tags["----:com.apple.iTunes:initialkey"] = self.initial_key.encode("utf-8")
+
+        self.m.tags["----:com.apple.iTunes:MusicBrainz Album Type"] = self.release_type.encode("utf-8")
 
         if self.replay_gain_write:
             self.m.tags["----:com.apple.iTunes:REPLAYGAIN_ALBUM_GAIN"] = str(self.album_replay_gain).encode("utf-8")

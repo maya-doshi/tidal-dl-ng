@@ -1350,6 +1350,7 @@ class Download:
         lyrics_synced: str = ""
         lyrics_unsynced: str = ""
         cover_data: bytes = None
+        release_type: str = track.album.type.lower() if hasattr(track, "album") and hasattr(track.album, "type") and track.album.type else ""
 
         if self.settings.data.lyrics_embed or self.settings.data.lyrics_file:
             # Try to retrieve lyrics.
@@ -1421,6 +1422,7 @@ class Download:
             explicit=explicit,
             bpm=track.bpm if track.bpm else 0,
             initial_key=format_initial_key(track.key, track.key_scale, self.settings.data.initial_key_format),
+            release_type=release_type,
         )
 
         m.save()

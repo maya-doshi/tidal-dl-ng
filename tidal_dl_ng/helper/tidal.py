@@ -32,8 +32,6 @@ def get_album_artists(media: Track | Album) -> [str]:
         if Role.main in artist.roles:
             artists_tmp.append(artist.name)
 
-    print(artists_tmp)
-
     return artists_tmp
 
 def name_builder_album_artist(media: Track | Album, first_only: bool = False, delimiter: str = ", ") -> str:
