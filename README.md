@@ -1,25 +1,24 @@
-# personal fork of tidal_dl_ng by exislow
-their account and repo dissapeared
+# tidaler! (download from tidal)
 
-# ![](./tidal_dl_ng/ui/icon32.png) TIDAL Downloader Next Generation! (tidal-dl-ng)
+fork of tidal_dl_ng by exislow, their account and repo dissapeared. this is a personal fork with tweaks to metadata to better suit my preferences. also probably not gonna be maintaining the gui since i never use it
 
-[![Release](https://img.shields.io/github/v/release/exislow/tidal-dl-ng)](https://img.shields.io/github/v/release/exislow/tidal-dl-ng)
-[![Build status](https://img.shields.io/github/actions/workflow/status/exislow/tidal-dl-ng/release-or-test-build.yml)](https://github.com/exislow/tidal-dl-ng/actions/workflows/release-or-test-build.yml)
-[![Commit activity](https://img.shields.io/github/commit-activity/m/exislow/tidal-dl-ng)](https://img.shields.io/github/commit-activity/m/exislow/tidal-dl-ng)
-[![License](https://img.shields.io/github/license/exislow/tidal-dl-ng)](https://img.shields.io/github/license/exislow/tidal-dl-ng)
+[![Release](https://img.shields.io/github/v/release/maya-doshi/tidaler)](https://img.shields.io/github/v/release/maya-doshi/tidaler)
+[![Build status](https://img.shields.io/github/actions/workflow/status/maya-doshi/tidaler/release-or-test-build.yml)](https://github.com/maya-doshi/tidaler/actions/workflows/release-or-test-build.yml)
+[![Commit activity](https://img.shields.io/github/commit-activity/m/maya-doshi/tidaler)](https://img.shields.io/github/commit-activity/m/maya-doshi/tidaler)
+[![License](https://img.shields.io/github/license/maya-doshi/tidaler)](https://img.shields.io/github/license/maya-doshi/tidaler)
 
 This tool allows you to download songs and videos from TIDAL. Multithreaded and multi-chunked downloads are supported.
 
-⚠️ **Windows** Defender / **Anti Virus** software / web browser alerts, while you try to download the app binary: This is a **false positive**. Please read [this issue](https://github.com/exislow/tidal-dl-ng/issues/231), [PyInstaller (used by this project) statement](https://github.com/pyinstaller/pyinstaller/blob/develop/.github/ISSUE_TEMPLATE/antivirus.md) and [the alternative installation solution](https://github.com/exislow/tidal-dl-ng/?tab=readme-ov-file#-installation--upgrade).
+⚠️ **Windows** Defender / **Anti Virus** software / web browser alerts, while you try to download the app binary: This is a **false positive**. Please read [this issue](https://github.com/maya-doshi/tidaler/issues/231), [PyInstaller (used by this project) statement](https://github.com/pyinstaller/pyinstaller/blob/develop/.github/ISSUE_TEMPLATE/antivirus.md) and [the alternative installation solution](https://github.com/maya-doshi/tidaler/?tab=readme-ov-file#-installation--upgrade).
 
 **A paid TIDAL plan is required!** Audio quality varies up to HiRes Lossless / TIDAL MAX 24-bit, 192 kHz depending on the song available. Dolby Atmos is supported. You can use the command line or GUI version of this tool.
 
 ![App Image](assets/app.png)
 
 ```bash
-$ tidal-dl-ng --help
+$ tidaler --help
 
- Usage: tidal-dl-ng [OPTIONS] COMMAND [ARGS]...
+ Usage: tidaler [OPTIONS] COMMAND [ARGS]...
 
 ╭─ Options ────────────────────────────────────────────────────────────────────╮
 │ --version  -v                                                                │
@@ -38,19 +37,14 @@ $ tidal-dl-ng --help
 ╰──────────────────────────────────────────────────────────────────────────────╯
 ```
 
-If you like this project and want to support it, feel free to buy me a coffee 🙃✌️
-
-<a href="https://www.buymeacoffee.com/exislow" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/arial-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
-<a href="https://ko-fi.com/exislow" target="_blank" rel="noopener noreferrer"><img src="https://help.ko-fi.com/hc/article_attachments/11833788361117" alt="61e11d430afb112ea33c3aa5_Button-1-p-500"></a>
-
 ## 💻 Installation / Upgrade
 
 **Requirements**: Python version 3.12 / 3.13 (other versions might work but are not tested!)
 
 ```bash
-pip install --upgrade tidal-dl-ng
+pip install --upgrade tidaler
 # If you like to have the GUI as well use this command instead
-pip install --upgrade "tidal-dl-ng[gui]"
+pip install --upgrade "tidaler[gui]"
 ```
 
 ## ⌨️ Usage
@@ -58,7 +52,7 @@ pip install --upgrade "tidal-dl-ng[gui]"
 You can use the command line (CLI) version to download media by URL:
 
 ```bash
-tidal-dl-ng dl https://tidal.com/browse/track/46755209
+tidaler dl https://tidal.com/browse/track/46755209
 # OR
 tdn dl https://tidal.com/browse/track/46755209
 ```
@@ -66,24 +60,24 @@ tdn dl https://tidal.com/browse/track/46755209
 Or by your favorites collections:
 
 ```bash
-tidal-dl-ng dl_fav tracks
-tidal-dl-ng dl_fav artists
-tidal-dl-ng dl_fav albums
-tidal-dl-ng dl_fav videos
+tidaler dl_fav tracks
+tidaler dl_fav artists
+tidaler dl_fav albums
+tidaler dl_fav videos
 ```
 
 You can also use the GUI:
 
 ```bash
-tidal-dl-ng-gui
+tidaler-gui
 # OR
 tdng
 # OR
-tidal-dl-ng gui
+tidaler gui
 ```
 
 If you would like to use the GUI version as a binary, have a look at the
-[release page](https://github.com/exislow/tidal-dl-ng/releases) and download the correct version for your OS.
+[release page](https://github.com/maya-doshi/tidaler/releases) and download the correct version for your OS.
 
 ## 🧁 Features
 
@@ -111,8 +105,8 @@ poetry install --all-extras --with dev,docs
 The main entry points are:
 
 ```bash
-tidal_ng_dl/cli.py
-tidal_ng_dl/gui.py
+tidaler/cli.py
+tidaler/gui.py
 ```
 
 ### 📺 GUI Builder
@@ -120,13 +114,13 @@ tidal_ng_dl/gui.py
 The GUI is built with `PySide6` using the [Qt Designer](https://doc.qt.io/qt-6/qtdesigner-manual.html):
 
 ```bash
-PYSIDE_DESIGNER_PLUGINS=tidal_dl_ng/ui pyside6-designer
+PYSIDE_DESIGNER_PLUGINS=tidaler/ui pyside6-designer
 ```
 
 After all changes are saved, you need to translate the Qt Designer `*.ui` file into Python code, for instance:
 
 ```
-pyside6-uic tidal_dl_ng/ui/main.ui -o tidal_dl_ng/ui/main.py
+pyside6-uic tidaler/ui/main.ui -o tidaler/ui/main.py
 ```
 
 This needs to be done for each created / modified `*.ui` file accordingly.
@@ -165,7 +159,7 @@ If you download an (unsigned) app from any source other than those that Apple de
 Remove the attribute and you can launch the application. [Source 1](https://discussions.apple.com/thread/253714860?sortBy=rank) [Source 2](https://www.reddit.com/r/macsysadmin/comments/13vu7f3/app_is_damaged_and_cant_be_opened_error_on_ventura/)
 
 ```
-sudo xattr -dr com.apple.quarantine /Applications/TIDAL-Downloader-NG.app/
+sudo xattr -dr com.apple.quarantine /Applications/tidaler.app/
 ```
 
 Why is this app unsigned? Only developers enrolled in the paid Apple Developer Program are allowed to sign (legal) apps. Without this subscription, app signing is not possible.
@@ -176,7 +170,7 @@ Does Gatekeeper really annoy you, and you'd like to disable it completely? Follo
 
 Short answer: It is a lie. Get rid of your antivirus app.
 
-Long answer: See [here](https://github.com/exislow/tidal-dl-ng/issues/231)
+Long answer: See [here](https://web.archive.org/web/20251213202238/https://github.com/exislow/tidal-dl-ng/issues/231)
 
 ### I get an error when `extract_flac` is enabled
 
@@ -194,7 +188,7 @@ sudo apt install libxcb-cursor0
 
 ### A terminal is flashing when I run this app on Windows
 
-Please see this issue [#103](https://github.com/exislow/tidal-dl-ng/issues/103).
+Please see this issue [#103](https://web.archive.org/web/20251207002107/https://github.com/exislow/tidal-dl-ng/issues/103).
 
 This is due to the Python `ffmpeg` library which is used and only happens on windows if `extract_flac` is activated.
 
@@ -210,11 +204,13 @@ You need to activate `download_dolby_atmos` in the settings. Then, if an item is
 
 ## 🫂 Contributors
 
+mainly exislow
+
 Thanks to all, who have contributed to this project!
 
 Special thanks goes out to [@orbittwz](https://github.com/orbittwz) for all his support in the issues section.
 
-<a href="https://github.com/exislow/tidal-dl-ng/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=exislow/tidal-dl-ng" /></a>
+<a href="https://github.com/maya-doshi/tidaler/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=maya-doshi/tidaler" /></a>
 
 This project is based on:
 
