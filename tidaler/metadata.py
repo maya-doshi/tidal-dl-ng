@@ -148,6 +148,7 @@ class Metadata:
         self.m.tags["DISCNUMBER"] = str(self.discnumber)
         self.m.tags["DISCTOTAL"] = str(self.totaldisc)
         self.m.tags["DATE"] = self.date
+        self.m.tags["ORIGINALDATE"] = self.date
         self.m.tags["COMPOSER"] = self.composer
         self.m.tags["ISRC"] = self.isrc
         self.m.tags["LYRICS"] = self.lyrics
